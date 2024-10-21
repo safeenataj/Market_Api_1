@@ -1,11 +1,9 @@
 package lexicon.se.market_api.controller;
 
-package com.marketplace.controller;
 
 
+import lexicon.se.market_api.domain.User;
 import lexicon.se.market_api.domain.dto.UserDTO;
-import lexicon.se.market_api.service.UserService;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
