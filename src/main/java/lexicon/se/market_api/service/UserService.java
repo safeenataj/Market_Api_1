@@ -1,4 +1,4 @@
-package com.marketplace.controller;
+package lexicon.se.market_api.service;
 
 import lexicon.se.market_api.domain.User;
 import lexicon.se.market_api.domain.dto.UserDTO;
