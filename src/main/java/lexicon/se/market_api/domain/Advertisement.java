@@ -24,6 +24,27 @@ public class Advertisement {
     @ManyToOne
     private User user;
 
+    public void setTitle(Object title) {
+    }
+
+    public void setDescription(Object description) {
+    }
+
+    public void setUser(User user) {
+    }
+
+    public void setExpiredDate(Object expiredDate) {
+    }
+
+    public void setCreatedDate(LocalDateTime now) {
+    }
+
+    public void setCategory(Object category) {
+    }
+
+    public void setPrice(Object price) {
+    }
+
     // Constructors, Getters, Setters
 }
 
