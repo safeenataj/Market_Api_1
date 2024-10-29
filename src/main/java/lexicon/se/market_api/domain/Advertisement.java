@@ -1,50 +1,43 @@
 package lexicon.se.market_api.domain;
 
-
-
 import jakarta.persistence.*;
+import lombok.*;
+
 import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 
 @Entity
 public class Advertisement {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long advertisementId;
+    private Long id;
 
     @Column(nullable = false)
     private String title;
 
+    @Lob
+    @Column(nullable = false, length = 65000)
     private String description;
+
+    @Column(nullable = false)
     private double price;
-    private LocalDateTime createdDate;
-    private LocalDateTime expiredDate;
+
     private String category;
 
-    @ManyToOne
+    private LocalDateTime createdDate;
+    private LocalDateTime expiredDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public void setTitle(Object title) {
+    @PrePersist
+    public void setCreatedDate() {
+        createdDate = LocalDateTime.now();
     }
-
-    public void setDescription(Object description) {
-    }
-
-    public void setUser(User user) {
-    }
-
-    public void setExpiredDate(Object expiredDate) {
-    }
-
-    public void setCreatedDate(LocalDateTime now) {
-    }
-
-    public void setCategory(Object category) {
-    }
-
-    public void setPrice(Object price) {
-    }
-
-    // Constructors, Getters, Setters
 }
-

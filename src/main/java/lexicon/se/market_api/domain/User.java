@@ -1,18 +1,22 @@
 package lexicon.se.market_api.domain;
-
-
-
-
 import jakarta.persistence.*;
+import lombok.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class User {
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 
+
+public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -22,9 +26,15 @@ public class User {
 
     private boolean isActive;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Advertisement> products = new ArrayList<>();
+    private LocalDateTime createdDate;
 
-    // Constructors, Getters, Setters
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Advertisement> advertisements;
+
+    @PrePersist
+    public void initialData() {
+        createdDate = LocalDateTime.now();
+        isActive = true; // Default to active when created
+    }
 }
 
