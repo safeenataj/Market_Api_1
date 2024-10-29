@@ -1,24 +1,16 @@
 package lexicon.se.market_api.service;
 
-import lexicon.se.market_api.domain.User;
-import lexicon.se.market_api.domain.dto.UserDTO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/api/users")
-public class UserController {
+import jakarta.validation.Valid;
+import lexicon.se.market_api.domain.entity.User;
+import lexicon.se.market_api.domain.dto.UserDTOView;
 
-    @Autowired
-    private UserService userService;
+public interface UserService {
+    User createUser(UserDTOView userDTO);  // Method to create a new user
+    User findUserByEmail(String email); // Method to find a user by email
+    User authenticateUser(String email, String password); // Method for user authentication
 
-    @PostMapping("/register")
-    public User registerUser(@RequestBody UserDTO userDTO) {
-        return userService.registerUser(userDTO);
-    }
+    void registerUser(@Valid UserDTOView userDTO);
 
-    @PostMapping("/login")
-    public User loginUser(@RequestBody UserDTO userDTO) {
-        return userService.authenticateUser(userDTO.getEmail(), userDTO.getPassword());
-    }
+    UserDTOView getUserById(Long id);
 }
