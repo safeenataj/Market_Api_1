@@ -2,6 +2,7 @@ package lexicon.se.market_api.service;
 
 
 
+import lexicon.se.market_api.converter.UserConverterImpl;
 import lexicon.se.market_api.domain.entity.Advertisement;
 import lexicon.se.market_api.domain.entity.User;
 import lexicon.se.market_api.domain.dto.AdvertisementDTOForm;
@@ -16,10 +17,12 @@ import java.util.List;
 public class AdvertisementServiceImpl implements AdvertisementService {
 
     private final AdvertisementRepository advertisementRepository;
+    private final UserConverterImpl userConverter;
 
     @Autowired
-    public AdvertisementServiceImpl(AdvertisementRepository advertisementRepository) {
+    public AdvertisementServiceImpl(AdvertisementRepository advertisementRepository, UserConverterImpl userConverter) {
         this.advertisementRepository = advertisementRepository;
+        this.userConverter = userConverter;
     }
 
     @Override
@@ -34,7 +37,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
                 .category(advertisementDTO.getCategory())
                 .createdDate(LocalDateTime.now())
                 .expiredDate(advertisementDTO.getExpiredDate())
-                .user(advertisementDTO.getUser())
+                .user(userConverter.formToEntity(advertisementDTO.getUser()))
                 .build();
 
         // Save and return the created advertisement
