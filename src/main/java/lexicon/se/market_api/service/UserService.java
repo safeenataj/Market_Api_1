@@ -12,5 +12,5 @@ public interface UserService {
 
     void registerUser(@Valid UserDTOView userDTO);
 
-    UserDTOView getUserById(Long id);
+  //  UserDTOView getUserById(String id);
 }
