@@ -2,40 +2,37 @@ package lexicon.se.market_api.controller;
 
 
 
-import com.marketplace.dto.AdvertisementDTO;
-import com.marketplace.entity.Advertisement;
-import com.marketplace.entity.User;
-import com.marketplace.service.AdvertisementService;
-import com.marketplace.service.UserService;
+
+import jakarta.validation.Valid;
+import lexicon.se.market_api.domain.dto.AdvertisementDTOForm;
+import lexicon.se.market_api.service.AdvertisementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/api/advertisements")
+@RequestMapping("/api/v1/advertisements")
 public class AdvertisementController {
 
-    @Autowired
-    private AdvertisementService advertisementService;
+    private final AdvertisementService advertisementService;
 
     @Autowired
-    private UserService userService;
-
-    @PostMapping("/create")
-    public Advertisement createAdvertisement(@RequestBody AdvertisementDTO advertisementDTO, @RequestParam String email) {
-        User user = userService.findUserByEmail(email);
-        return advertisementService.createAdvertisement(advertisementDTO, user);
+    public AdvertisementController(AdvertisementService advertisementService) {
+        this.advertisementService = advertisementService;
     }
 
-    @GetMapping("/user")
-    public List<Advertisement> getAdvertisementsForUser(@RequestParam String email) {
-        User user = userService.findUserByEmail(email);
-        return advertisementService.getAdvertisementsForUser(user);
+    @PostMapping
+    public ResponseEntity<Void> createAdvertisement(@RequestBody @Valid AdvertisementDTOForm advertisementDTO) {
+        advertisementService.createAdvertisement(advertisementDTO); // You might need to convert DTO to Entity
+        ResponseEntity<Void> build = ResponseEntity.noContent().build();
+        return build;
     }
 
-    @GetMapping("/active")
-    public List<Advertisement> getActiveAdvertisements() {
-        return advertisementService.getActiveAdvertisements();
+    @GetMapping("/{id}")
+    public ResponseEntity<AdvertisementDTOForm> getAdvertisementById(@PathVariable Long id) {
+        AdvertisementDTOForm advertisement = advertisementService.getAdvertisementById(id); // Retrieve advertisement by ID
+        return ResponseEntity.ok(advertisement);
     }
+
+    // Additional advertisement-related endpoints can be added here
 }

@@ -19,8 +19,7 @@ public class AdvertisementConverterImpl implements AdvertisementConverter {
 
     @Override
     public Advertisement formToEntityUpdate(AdvertisementDTOForm dto) {
-        return Advertisement.builder()
-          //      .AdvertisementId(dto.getAdvertisementId())
+        return Advertisement.builder().id(dto.getAdvertisementId())
                 .title(dto.getTitle())
                 .description(dto.getDescription())
                 .price(dto.getPrice())
@@ -33,8 +32,7 @@ public class AdvertisementConverterImpl implements AdvertisementConverter {
 
     @Override
     public AdvertisementDTOView entityToView(Advertisement entity) {
-        return AdvertisementDTOView.builder()
-              //  .advertisementId(entity.getAdvertisementId())
+        return AdvertisementDTOView.builder().advertisementId(entity.getId())
                 .title(entity.getTitle())
                 .description(entity.getDescription())
                 .price(entity.getPrice())
@@ -47,7 +45,7 @@ public class AdvertisementConverterImpl implements AdvertisementConverter {
     @Override
     public Advertisement viewToEntity(AdvertisementDTOView dto) {
         return Advertisement.builder()
-              //  .advertisementId(dto.getAdvertisementId())
+                .id(dto.getAdvertisementId())
                 .title(dto.getTitle())
                 .description(dto.getDescription())
                 .price(dto.getPrice())
