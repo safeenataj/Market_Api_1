@@ -1,5 +1,8 @@
-package lexicon.se.market_api.domain;
+package lexicon.se.market_api.domain.entity;
+
+
 import jakarta.persistence.*;
+import lexicon.se.market_api.domain.entity.Advertisement;
 import lombok.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,8 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
-
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -28,7 +29,7 @@ public class User {
 
     private LocalDateTime createdDate;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user")
     private List<Advertisement> advertisements;
 
     @PrePersist
@@ -37,4 +38,3 @@ public class User {
         isActive = true; // Default to active when created
     }
 }
-
